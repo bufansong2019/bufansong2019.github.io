@@ -1,5 +1,5 @@
 {
-  "name": "鱼行二进制",
+  "name": "fishbyte",
   "version": "1.0.0",
   "scripts": {
     "dev": "vuepress dev docs",
