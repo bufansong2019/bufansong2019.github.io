@@ -1,33 +1,37 @@
 name: Build Deploy
 
-# 在main分支发生push事件时触发。
 on:
   push:
     branches:
       - main
 
-env: # 设置环境变量
-  TZ: Asia/Shanghai # 时区（设置时区可使页面中的`最近更新时间`使用时区时间）
+env:
+  TZ: Asia/Shanghai
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 关键：给写入权限！！！
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-
-      - name: build project ⚗️
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: 16
-      - run: |
-          npm install
+          persist-credentials: false  # 关键：必须加！
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install & Build
+        run: |
+          yarn install
           yarn build
 
-      - name: Deploy 🚀
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
-        env: # 设置环境变量
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # toKen私密变量
         with:
           folder: docs/.vuepress/dist
-          branch: gh-pages # 部署到的分支
+          branch: gh-pages
+          token: ${{ secrets.ACCESS_TOKEN }}
