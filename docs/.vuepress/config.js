@@ -3,7 +3,7 @@ const plugins = require('./config/plugins.js');
 const themeConfig = require('./config/themeConfig.js');
 
 module.exports = {
-  theme: 'vdoing', // 使用npm包主题
+  theme: 'vdoing',
   title: '鱼行二进制',
   description: '漫游逻辑深海，记录每一行成长代码，分享技术学习笔记。',
   base: '/',
