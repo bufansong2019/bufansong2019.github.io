@@ -12,12 +12,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 关键：给写入权限！！！
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # 关键：必须加！
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
