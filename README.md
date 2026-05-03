@@ -24,13 +24,13 @@ git clone https://github.com/bufansong2019/bufansong2019.github.io.git
 cd bufansong2019.github.io
 
 # 安装依赖
-yarn install
+npm install
 
 # 本地启动
-yarn dev
+npm run dev
 
 # 构建项目
-yarn build
+npm run build
 ```
 
 
