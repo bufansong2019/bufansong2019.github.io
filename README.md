@@ -20,14 +20,17 @@
 # 克隆仓库
 git clone https://github.com/bufansong2019/bufansong2019.github.io.git
 
-# 进入项目目录
+# 进入目录
 cd bufansong2019.github.io
 
 # 安装依赖
-npm install
+yarn install
 
-# 本地开发启动
-npm run dev
+# 本地启动
+yarn dev
+
+# 构建项目
+yarn build
 ```
 
 
