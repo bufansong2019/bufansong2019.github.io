@@ -1160,9 +1160,9 @@ const HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// Inject deploy metadata at cold start (Cloudflare auto-deploys without build step)
-const DEPLOY_TIME = new Date().toISOString();
-const BUILD_VERSION = 'cf-' + DEPLOY_TIME.slice(0, 10).replace(/-/g, '');
+// Deploy metadata — injected at build time by scripts/build-cf.js
+const DEPLOY_TIME = '__CF_DEPLOY_TIME__';
+const BUILD_VERSION = '__CF_BUILD_VERSION__';
 const HTML_READY = HTML.replace(/__DEPLOY_TIME__/g, DEPLOY_TIME).replace(/__BUILD_VERSION__/g, BUILD_VERSION);
 
 export default {
