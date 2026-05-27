@@ -1,0 +1,10 @@
+# claude
+.claude
+startClaude.bat
+
+# wrangler
+.wrangler
+
+# build
+dist/
+node_modules/

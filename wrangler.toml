@@ -1,0 +1,12 @@
+name = "personal-homepage"
+main = "index.js"
+compatibility_date = "2026-05-03"
+
+[vars]
+SECRET_KEY = "xxx.f1sh.org"
+MAX_UPLOAD_SIZE_MB = "200"
+
+# R2 存储桶绑定
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "xxx-bucket"
