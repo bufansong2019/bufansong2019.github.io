@@ -18,7 +18,7 @@ jobs:
           node-version: '20'
 
       - name: Build HTML
-        run: node scripts/build-html.js
+        run: node js/build-html.js
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4

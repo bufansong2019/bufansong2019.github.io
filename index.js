@@ -6,9 +6,11 @@ const HTML = `<!DOCTYPE html>
   <title>~/[你的名字] · Digital Archive</title>
   <meta name="x-deploy-time" content="__DEPLOY_TIME__">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.6.0/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.6.0/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.6.0/style.css" media="print" onload="this.onload=null;this.media='all'">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.6.0/style.css" media="print" onload="this.onload=null;this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.6.0/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.6.0/style.css"></noscript>
   <meta name="description" content="[一句话个人简介：全栈工程师，专注于轻量级全栈应用与开源工具]">
+  <meta name="baidu-site-verification" content="codeva-c3qLDRTqRf" />
   <meta name="author" content="[你的名字]">
   <meta property="og:title" content="~/[你的名字] · Digital Archive">
   <meta property="og:description" content="[一句话个人简介]">
@@ -190,7 +192,7 @@ const HTML = `<!DOCTYPE html>
       width: 64px;
       height: 0;
       border: none;
-      border-top: 1px dashed var(--accent-color);
+      border-top: 1px solid var(--accent-color);
       opacity: 0.35;
       margin: 3rem auto;
     }
@@ -544,6 +546,55 @@ const HTML = `<!DOCTYPE html>
       opacity: 0.7;
     }
 
+    /* ===== Zone: Guestbook ===== */
+    .guestbook-zone {
+      margin-bottom: 3rem;
+    }
+    #twikoo input,
+    #twikoo textarea,
+    #twikoo button,
+    #twikoo .el-input__inner,
+    #twikoo .el-textarea__inner {
+      font-family: var(--font-sans) !important;
+    }
+    #twikoo .el-button {
+      color: var(--accent-color) !important;
+      border-color: var(--accent-color) !important;
+      background-color: transparent !important;
+    }
+    #twikoo .el-button--primary {
+      background-color: var(--accent-color) !important;
+      color: var(--bg-color) !important;
+    }
+    #twikoo .el-button:hover,
+    #twikoo .el-button:focus {
+      background-color: var(--accent-color) !important;
+      color: var(--bg-color) !important;
+      opacity: 0.85;
+    }
+    #twikoo .el-button--primary:hover,
+    #twikoo .el-button--primary:focus {
+      background-color: var(--accent-color) !important;
+      opacity: 0.85;
+    }
+    #twikoo svg,
+    #twikoo i,
+    #twikoo .el-icon {
+      color: var(--accent-color) !important;
+    }
+    #twikoo .el-input__inner:focus,
+    #twikoo .el-textarea__inner:focus {
+      border-color: var(--accent-color) !important;
+    }
+    #twikoo a {
+      color: var(--accent-color) !important;
+    }
+    #twikoo .el-checkbox__input.is-checked .el-checkbox__inner,
+    #twikoo .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+      background-color: var(--accent-color) !important;
+      border-color: var(--accent-color) !important;
+    }
+
     /* ===== Zone 4: System Status ===== */
     .system-zone {
       margin-top: 3rem;
@@ -673,7 +724,6 @@ const HTML = `<!DOCTYPE html>
       display: flex;
       align-items: baseline;
       gap: 0.5rem;
-      padding-left: 0.6rem;
     }
     .cmd-hint-tag {
       font-family: var(--font-mono);
@@ -906,6 +956,14 @@ const HTML = `<!DOCTYPE html>
       </div>
     </section>
 
+    <hr class="zone-sep" aria-hidden="true">
+
+    <!-- ========== Zone: Guestbook ========== -->
+    <section class="guestbook-zone" aria-labelledby="guestbook-heading">
+      <h2 id="guestbook-heading" class="section-label">// Guestbook</h2>
+      <div id="twikoo"></div>
+    </section>
+
     <!-- ========== Zone 4: System Status ========== -->
     <footer id="system-status" class="system-zone">
       <div class="specs">
@@ -936,11 +994,14 @@ const HTML = `<!DOCTYPE html>
 
       if (themeState === 'light') {
         html.classList.add('light-theme');
+        html.setAttribute('data-theme', 'light');
         btn.innerText = 'theme: light';
       } else if (themeState === 'dark') {
         html.classList.add('dark-theme');
+        html.setAttribute('data-theme', 'dark');
         btn.innerText = 'theme: dark';
       } else {
+        html.removeAttribute('data-theme');
         btn.innerText = 'theme: auto';
       }
       localStorage.setItem('theme-preference', themeState);
@@ -1098,8 +1159,8 @@ const HTML = `<!DOCTYPE html>
         var elapsedH = Math.floor((Date.now() - new Date(timeStr).getTime()) / 3600000);
         var label;
         if (elapsedH < 1) label = '刚刚部署';
-        else if (elapsedH < 24) label = elapsedH + ' 小时前';
-        else label = Math.floor(elapsedH / 24) + ' 天前';
+        else if (elapsedH < 24) label = elapsedH + ' 小时前部署';
+        else label = Math.floor(elapsedH / 24) + ' 天前部署';
         document.getElementById('deploy-time').innerText = label;
       }
 
@@ -1157,10 +1218,52 @@ const HTML = `<!DOCTYPE html>
   });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.all.min.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var loaded = false;
+  var timer = setTimeout(function() {
+    if (!loaded) {
+      document.getElementById('twikoo').innerHTML =
+        '<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:2rem 0;">// 评论区加载超时，请刷新重试</p>';
+    }
+  }, 8000);
+
+  function init() {
+    if (typeof twikoo !== 'undefined') {
+      loaded = true;
+      clearTimeout(timer);
+      twikoo.init({ envId: 'https://twikoo.f1sh.org', el: '#twikoo', lang: 'zh-CN' });
+    }
+  }
+
+  if (typeof twikoo !== 'undefined') {
+    init();
+  } else {
+    // twikoo script hasn't executed yet — poll briefly
+    var retries = 0;
+    var check = setInterval(function() {
+      if (typeof twikoo !== 'undefined' || retries >= 20) {
+        clearInterval(check);
+        init();
+      }
+      retries++;
+    }, 100);
+  }
+});</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d78875697260aaf565fbc4b023687f4d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </body>
 </html>`;
 
-// Deploy metadata — injected at build time by scripts/build-cf.js
+// Deploy metadata — injected at build time by js/build-worker.js
 const DEPLOY_TIME = '__CF_DEPLOY_TIME__';
 const BUILD_VERSION = '__CF_BUILD_VERSION__';
 const HTML_READY = HTML.replace(/__DEPLOY_TIME__/g, DEPLOY_TIME).replace(/__BUILD_VERSION__/g, BUILD_VERSION);
